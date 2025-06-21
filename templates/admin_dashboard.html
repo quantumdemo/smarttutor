@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome, {{ current_user.username }} | <a href="/logout">Logout</a></p>
+
+<h2>Upload Questions via CSV</h2>
+<form method="POST" action="/admin/upload" enctype="multipart/form-data">
+  <input type="file" name="csv_file" accept=".csv" required>
+  <button class="btn btn-secondary" type="submit">Upload</button>
+</form>
+
+<h2>All Questions</h2>
+<table class="table table-bordered">
+<tr><th>Question</th><th>Topic</th><th>Answer</th><th>Actions</th></tr>
+{% for idx, q in enumerate(questions) %}
+<tr>
+  <form method="POST" action="/admin/edit/{{ idx }}">
+    <td><input class="form-control" type="text" name="question" value="{{ q.question }}"></td>
+    <td><input class="form-control" type="text" name="topic" value="{{ q.topic }}"></td>
+    <td><input class="form-control" type="text" name="answer" value="{{ q.answer }}"></td>
+    <td>
+      <button class="btn btn-primary" type="submit">Update</button>
+  </form>
+  <form method="POST" action="/admin/delete/{{ idx }}" style="display:inline;">
+      <button class="btn btn-danger" type="submit">Delete</button>
+  </form>
+    </td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

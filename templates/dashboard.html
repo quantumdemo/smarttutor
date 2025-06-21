@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome {{ current_user.username }}</h2>
+<a href="/logout">Logout</a>
+<h3>Your Quiz</h3>
+<ul>
+  {% for q in questions %}
+    <li><strong>{{ q.question }}</strong><br>Topic: {{ q.topic }}<br>Correct Answer: {{ q.answer }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
